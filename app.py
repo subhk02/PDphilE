@@ -9,9 +9,6 @@ import tempfile
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Create a temporary directory for uploaded files
-UPLOAD_FOLDER = tempfile.mkdtemp()
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 
 @app.route('/api/merge', methods=['POST'])
@@ -29,40 +26,38 @@ def merge_pdfs():
     for file in files:
         if not file.filename.lower().endswith('.pdf'):
             return jsonify({'error': 'All files must be PDFs'}), 400
-    
-    # Process the files
+
     try:
         merger = PdfMerger()
-        
-        # Save the files temporarily and add to merger
-        file_paths = []
-        for file in files:
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            file_paths.append(filepath)
-            merger.append(filepath)
-        
-        # Generate a unique filename for the merged PDF
-        output_filename = f"merged_{uuid.uuid4().hex}.pdf"
-        output_path = os.path.join(app.config['UPLOAD_FOLDER'], output_filename)
-        
-        # Write the merged PDF
-        merger.write(output_path)
-        merger.close()
-        
-        # Clean up individual files
-        for filepath in file_paths:
-            os.remove(filepath)
-        
-        # Return the merged PDF
-        return send_file(
-            output_path,
-            as_attachment=True, 
-            download_name="merged.pdf",
-            mimetype='application/pdf'
-        )
-    
+
+        # Use a temporary directory that will be automatically cleaned up
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_paths = []
+
+            # Save uploaded files in the temp directory
+            for file in files:
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(temp_dir, filename)
+                file.save(filepath)
+                file_paths.append(filepath)
+                merger.append(filepath)
+
+            # Generate a unique filename for the merged PDF
+            output_filename = f"merged_{uuid.uuid4().hex}.pdf"
+            output_path = os.path.join(temp_dir, output_filename)
+
+            # Write the merged PDF
+            merger.write(output_path)
+            merger.close()
+
+            # Return the merged PDF
+            return send_file(
+                output_path,
+                as_attachment=True, 
+                download_name="merged.pdf",
+                mimetype='application/pdf'
+            )
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
