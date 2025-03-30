@@ -161,8 +161,8 @@ export default function Home() {
               onClick={mergePDFs}
               disabled={isLoading || files.length === 0}
               className={`flex items-center px-4 py-2 rounded-md text-white font-medium ${isLoading || files.length === 0
-                  ? 'bg-blue-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700'
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700'
                 }`}
             >
               {isLoading ? (
