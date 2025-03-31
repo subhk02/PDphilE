@@ -1,17 +1,19 @@
 // app/page.js
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { FileIcon, PlusIcon, Trash2Icon, ArrowDownIcon, XIcon } from 'lucide-react';
 
 export default function Home() {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+  const dropAreaRef = useRef(null);
 
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
+  const validateAndAddFiles = (fileList) => {
+    const selectedFiles = Array.from(fileList);
 
     // Filter for PDF files only
     const pdfFiles = selectedFiles.filter(file =>
@@ -24,10 +26,48 @@ export default function Home() {
     }
 
     setFiles(prev => [...prev, ...pdfFiles]);
+  };
 
+  const handleFileChange = (e) => {
+    validateAndAddFiles(e.target.files);
     // Reset file input
     e.target.value = null;
   };
+
+  const handleDragEnter = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragging) {
+      setIsDragging(true);
+    }
+  }, [isDragging]);
+
+  const handleDragLeave = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Only set isDragging to false if we're leaving the drop area
+    // and not entering a child element
+    if (dropAreaRef.current && !dropAreaRef.current.contains(e.relatedTarget)) {
+      setIsDragging(false);
+    }
+  }, []);
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    
+    if (e.dataTransfer.files.length > 0) {
+      validateAndAddFiles(e.dataTransfer.files);
+    }
+  }, []);
 
   const removeFile = (index) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
@@ -107,8 +147,17 @@ export default function Home() {
           <div className="p-6">
             {/* File Upload Area */}
             <div
-              className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer"
+              ref={dropAreaRef}
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+                isDragging 
+                  ? 'border-blue-500 bg-blue-50' 
+                  : 'border-gray-300 hover:bg-gray-50'
+              }`}
               onClick={() => fileInputRef.current.click()}
+              onDragEnter={handleDragEnter}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
             >
               <input
                 type="file"
@@ -121,7 +170,9 @@ export default function Home() {
               <div className="mx-auto w-12 h-12 text-gray-400 mb-3">
                 <PlusIcon className="w-12 h-12" suppressHydrationWarning />
               </div>
-              <p className="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+              <p className="text-gray-700 font-medium mb-1">
+                {isDragging ? 'Drop files here' : 'Click to upload or drag and drop'}
+              </p>
               <p className="text-sm text-gray-500">PDF files only (max 16MB each)</p>
             </div>
 
@@ -132,7 +183,7 @@ export default function Home() {
                   <h3 className="font-medium">Selected Files ({files.length})</h3>
                   <button
                     onClick={clearAllFiles}
-                    className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1"
+                    className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1 cursor-pointer"
                   >
                     Clear All
                   </button>
@@ -148,7 +199,7 @@ export default function Home() {
                         onClick={() => removeFile(index)}
                         className="text-gray-500 hover:text-red-500 ml-2 flex-shrink-0 p-1"
                       >
-                        <Trash2Icon className="w-4 h-4" />
+                        <Trash2Icon className="w-4 h-4 cursor-pointer" />
                       </button>
                     </div>
                   ))}
@@ -156,7 +207,7 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="p-6 pt-0 flex justify-end">
+          <div className="p-6 pt-0 flex justify-end cursor-pointer">
             <button
               onClick={mergePDFs}
               disabled={isLoading || files.length === 0}
@@ -198,7 +249,7 @@ export default function Home() {
           </div>
           <div className="p-6">
             <ol className="space-y-3 list-decimal ml-5">
-              <li className="text-gray-700">Upload multiple PDF files using the upload area above</li>
+              <li className="text-gray-700">Upload multiple PDF files by drag & drop or clicking the upload area</li>
               <li className="text-gray-700">Arrange files in the desired order (first on top)</li>
               <li className="text-gray-700">Click "Merge & Download" to combine the files</li>
               <li className="text-gray-700">Your merged PDF will automatically download</li>
