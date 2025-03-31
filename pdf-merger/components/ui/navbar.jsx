@@ -6,28 +6,28 @@ import { LucideGithub, LucideUser } from "lucide-react";
 const Navbar = () => {
   return (
     <>
-      <div className="w-full flex px-12 py-1 justify-between items-center mb-8">
+      <div className="w-full flex sm:px-12 sm:pt-6 justify-between items-center mb-4 px-4 pt-4">
         {/* Logo */}
         <div>
-          <Image 
-            className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
-            src="/logo.png" 
-            alt="Logo" 
-            width={90} 
-            height={90} 
+          <Image
+            className="w-15 h-15 sm:w-24 sm:h-24 md:w-28 md:h-28"
+            src="/logo.png"
+            alt="Logo"
+            width={70}
+            height={70}
             suppressHydrationWarning
           />
         </div>
-        
+
         {/* Navigation */}
         <div className="flex justify-center items-center gap-10">
-          
+
           {/* About Dropdown */}
           <div className="relative group">
             <h2 className="text-2xl font-semibold cursor-pointer">
               About
             </h2>
-            
+
             {/* Dropdown Content */}
             <div className="absolute mt-3 min-w-80 h-auto -right-9 bg-white shadow-lg rounded-lg p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transform scale-95 group-hover:scale-100 transition-all duration-300 ease-in-out">
               <p className="text-lg text-gray-700 leading-relaxed">
@@ -36,7 +36,7 @@ const Navbar = () => {
 
               {/* Owner Info */}
               <div className="flex items-center gap-3 mt-4">
-                <LucideUser size={22} className="text-gray-600" suppressHydrationWarning/>
+                <LucideUser size={22} className="text-gray-600" suppressHydrationWarning />
                 <p className="text-lg text-gray-800 font-medium">
                   Developed by <a href="https://github.com/subhk02" target="_blank" className="text-blue-600 hover:underline">Subham</a>
                 </p>
@@ -51,9 +51,9 @@ const Navbar = () => {
 
           {/* GitHub Icon Link */}
           <a href="https://github.com/subhk02/PDphilE" target="_blank">
-            <LucideGithub size={30} className="hover:text-black transition-colors duration-200" suppressHydrationWarning/>
+            <LucideGithub size={30} className="hover:text-black transition-colors duration-200" suppressHydrationWarning />
           </a>
-          
+
         </div>
       </div>
     </>

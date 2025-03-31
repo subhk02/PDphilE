@@ -3,6 +3,9 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { FileIcon, PlusIcon, Trash2Icon, ArrowDownIcon, XIcon } from 'lucide-react';
+import { BsTwitterX } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
+import { BiLogoGmail } from "react-icons/bi";
 import Navbar from '@/components/ui/navbar';
 
 export default function Home() {
@@ -262,8 +265,20 @@ export default function Home() {
           </div>
         </div>
 
-        <footer className="py-6 text-center text-gray-500 text-sm">
-          <p>PDF Merger - A secure way to merge your PDF files</p>
+        <footer className="pt-7 pb-2 text-center text-gray-500 text-sm">
+          <p>PDphilE - A secure way to merge your PDF files</p>
+          <div className="flex gap-6 my-4 justify-center">
+          <a href="https://x.com/Subhamk0211" target='_blank'><BsTwitterX className='w-6 h-6 cursor-pointer' suppressHydrationWarning/></a>
+          <a href="https://github.com/subhk02" target='_blank'><BsGithub className='w-6 h-6 cursor-pointer' suppressHydrationWarning/></a>
+          </div>
+          <div className="flex gap-2 mt-4 justify-center items-center">
+            <h2 className="text-xl font-semibold text-black">Contact Me :</h2>
+            <div className='flex justify-center items-center'>
+            <BiLogoGmail className='w-6 h-6' suppressHydrationWarning/>
+            <span className='text-lg font-bold'>/subhampatro9122@gmail.com</span>
+            </div>
+          </div>
+
         </footer>
       </main>
     </>
