@@ -271,7 +271,7 @@ export default function Home() {
           <a href="https://x.com/Subhamk0211" target='_blank'><BsTwitterX className='w-6 h-6 cursor-pointer' suppressHydrationWarning/></a>
           <a href="https://github.com/subhk02" target='_blank'><BsGithub className='w-6 h-6 cursor-pointer' suppressHydrationWarning/></a>
           </div>
-          <div className="flex gap-2 mt-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-2 mt-4 justify-center items-center">
             <h2 className="text-xl font-semibold text-black">Contact Me :</h2>
             <div className='flex justify-center items-center'>
             <BiLogoGmail className='w-6 h-6' suppressHydrationWarning/>
