@@ -95,10 +95,6 @@ Backend will be available at `http://localhost:5000/`.
 
 Feel free to fork this repository and submit pull requests with improvements and bug fixes.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Contact
 
 For any issues or queries, feel free to reach out:
