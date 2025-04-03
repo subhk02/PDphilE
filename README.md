@@ -106,8 +106,3 @@ For any issues or queries, feel free to reach out:
 - GitHub: <a href="https://github.com/subhk02" target="_blank">subhk02</a>
 - Email: <a href="mailto:subhampatro9122@gmail.com">subhampatro9122@gmail.com</a>
 
-<script>
-  document.querySelectorAll('a').forEach(link => {
-    link.setAttribute('target', '_blank');
-  });
-</script>
