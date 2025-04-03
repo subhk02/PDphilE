@@ -104,5 +104,5 @@ This project is licensed under the MIT License.
 For any issues or queries, feel free to reach out:
 
 - GitHub: [subhk02](https://github.com/subhk02)
-- Email: [your-email@example.com](mailto\:your-email@example.com)
+- Email: [subhampatro9122@gmail.com](mailto\:subhampatro9122@gmail.com)
 
