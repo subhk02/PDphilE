@@ -1,6 +1,6 @@
 # PD-Phile
 
-[Visit PD-Phile](https://pd-phile.vercel.app/)
+[Visit PD-Phile](https://pd-phile.vercel.app/){:target="_blank"}
 
 PD-Phile is a web application that provides a seamless interface for users to interact with data and services. The frontend is built using Next.js, ensuring a fast and efficient user experience, while the backend is powered by Python Flask, enabling robust API handling and data processing.
 
@@ -15,13 +15,13 @@ PD-Phile is a web application that provides a seamless interface for users to in
 
 ### Frontend
 
-- [Next.js](https://nextjs.org/)
+- [Next.js](https://nextjs.org/){:target="_blank"}
 - React
 - Tailwind CSS (if applicable)
 
 ### Backend
 
-- [Flask](https://flask.palletsprojects.com/)
+- [Flask](https://flask.palletsprojects.com/){:target="_blank"}
 - Python
 
 ## Installation & Setup
@@ -85,7 +85,7 @@ Backend will be available at `http://localhost:5000/`.
 ### Backend
 
 - The backend is deployed using Render. To deploy:
-  1. Create an account on [Render](https://render.com/).
+  1. Create an account on [Render](https://render.com/){:target="_blank"}.
   2. Create a new web service and connect your GitHub repository.
   3. Set the build command to `pip install -r requirements.txt`.
   4. Set the start command to `gunicorn app:app`.
@@ -103,6 +103,6 @@ This project is licensed under the MIT License.
 
 For any issues or queries, feel free to reach out:
 
-- GitHub: [subhk02](https://github.com/subhk02)
-- Email: [subhampatro9122@gmail.com](mailto\:subhampatro9122@gmail.com)
+- GitHub: [subhk02](https://github.com/subhk02){:target="_blank"}
+- Email: [your-email@example.com](mailto\:your-email@example.com)
 
